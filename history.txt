@@ -1,0 +1,4 @@
+2022-08-08 16:55:01.174974
+Mar’ina Roshcha, temperature 21C, Облачно
+Sunrise: 04:47
+Sunset: 20:23

@@ -1,0 +1,30 @@
+#!/usr/bin/env python3.10
+from pathlib import Path
+
+from exceptions import ApiServiceError, CantGetDataFromPipeline
+from get_gps_coordinates import get_gps_coordinates
+from weather_api_service import get_weather
+from weather_formatter import format_weather
+from history import JSONFileWeatherStorage, save_weather
+
+
+def main():
+    try:
+        coordinates = get_gps_coordinates()
+    except CantGetDataFromPipeline:
+        print('Cant get coordinates.')
+        exit(1)
+    try:
+        weather = get_weather(coordinates)
+    except ApiServiceError:
+        print('Cant get weather data from api.')
+        exit(1)
+    save_weather(
+            weather,
+            JSONFileWeatherStorage(Path.cwd() / 'history.json'))
+    print(format_weather(weather))
+
+
+if __name__ == '__main__':
+    main()
+
